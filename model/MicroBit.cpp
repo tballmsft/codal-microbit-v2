@@ -50,6 +50,7 @@ static volatile MicroBitNoInitMemoryRegion __attribute__ ((section (".noinit")))
 #define IS_3_3_V() ((NRF_UICR->REGOUT0 & 7) == 5)
 
 NFConPins::NFConPins() {
+    /**
     // DMESG("disableNFConPins\n");
     // Ensure NFC pins are configured as GPIO. If not, update the non-volatile UICR.
     if (NRF_UICR->NFCPINS || !IS_3_3_V()) {
@@ -74,7 +75,7 @@ NFConPins::NFConPins() {
 
         // Reset, so the changes can take effect.
         NVIC_SystemReset();
-    }
+    } */
 }
 
     /*
