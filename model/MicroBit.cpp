@@ -50,6 +50,8 @@ static volatile MicroBitNoInitMemoryRegion __attribute__ ((section (".noinit")))
 #define IS_3_3_V() ((NRF_UICR->REGOUT0 & 7) == 5)
 
 NFConPins::NFConPins() {
+    
+      // this code is from https://github.com/nrfconnect/sdk-hal_nordic/blob/8f013ea950f41bf69b18bf688bfb0dd80a3fdc44/nrfx/mdk/system_nrf52833.c#L121
 
       if ((NRF_UICR->NFCPINS & UICR_NFCPINS_PROTECT_Msk) == (UICR_NFCPINS_PROTECT_NFC << UICR_NFCPINS_PROTECT_Pos)){
             NRF_NVMC->CONFIG = NVMC_CONFIG_WEN_Wen << NVMC_CONFIG_WEN_Pos;
@@ -137,8 +139,8 @@ MicroBit::MicroBit() :
     io(adc, touchSensor),
     serial(io.usbTx, io.usbRx, NRF_UARTE0),
     _i2c(io.sda, io.scl),
-    // i2c(io.sda, io.scl),
-    i2c(io.P20, io.P19),
+    i2c(io.sda, io.scl),
+    // i2c(io.P20, io.P19),
     power(_i2c, io, systemTimer),
     flash(_i2c, io, power),
     internalFlash(MICROBIT_STORAGE_PAGE, 1, MICROBIT_CODEPAGESIZE),
